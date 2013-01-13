@@ -84,6 +84,15 @@ package com.mxi.image
 			_loader.loadBytes(_source);				
 		}
 		
+		public function getwidth() : Number
+		{
+			return _width;
+		}
+		
+		public function getheight() : Number
+		{
+			return _height;
+		}
 		
 		protected function _getImageInfo() : Object
 		{

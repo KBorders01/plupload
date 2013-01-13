@@ -51,6 +51,7 @@ package com.plupload {
 		private var _headers:Object, _settings:Object;
 		private var _removeAllListeners:Function;
 		private var _removeAllURLStreamListeners:Function;
+		private var _imgwidth:Number, _imgheight:Number;
 
 		/**
 		 * Id property of file.
@@ -79,6 +80,14 @@ package com.plupload {
 		public function get size():Number {
 			return this._size;
 		}
+		
+		public function get imgwidth():Number {
+			return this._imgwidth;
+		}
+		
+		public function get imgheight():Number {
+			return this._imgheight;
+		}
 
 		/**
 		 * Constructs a new file object.
@@ -91,6 +100,8 @@ package com.plupload {
 			this._fileRef = file_ref;
 			this._size = file_ref.size;
 			this._fileName = file_ref.name;
+			this._imgwidth = 0;
+			this._imgheight = 0;
 		}
 		
 		/**
@@ -301,6 +312,9 @@ package com.plupload {
 							file._imageData = image.imageData;
 							file._imageData.position = 0;
 							file._size = image.imageData.length;
+							// This is after scaling
+							file._imgwidth = image.getwidth();
+							file._imgheight = image.getheight();
 						}
 						startUpload();
 					});

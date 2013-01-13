@@ -245,6 +245,9 @@
 				uploader.bind("Flash:UploadChunkComplete", function(up, info) {
 					var chunkArgs, file = up.getFile(lookup[info.id]);
 
+          file.imgwidth = info.imgwidth;
+          file.imgheight = info.imgheight;
+
 					chunkArgs = {
 						chunk : info.chunk,
 						chunks : info.chunks,

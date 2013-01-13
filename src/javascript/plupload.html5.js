@@ -142,7 +142,12 @@
 
 				// Remove canvas and execute callback with decoded image data
 				canvas.parentNode.removeChild(canvas);
-				callback({success : true, data : data});
+				callback({
+				  success : true,
+				  data : data,
+				  imgwidth : width,
+				  imgheight : height
+				});
 			};
 
 			img.src = data;
@@ -750,6 +755,8 @@
 						// send the raw image and let the server do the scaling
 						if (res.success) {
 							file.size = res.data.length;
+							file.imgwidth = res.imgwidth;
+							file.imgheight = res.imgheight;
 							sendBinaryBlob(res.data);
 						} else if (features.chunks) {
 							sendBinaryBlob(nativeFile); 

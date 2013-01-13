@@ -227,7 +227,9 @@ package com.plupload {
 
 					fireEvent("UploadComplete", {
 						id : file.id,
-						text : e.text.replace(/\\/g, "\\\\")
+						text : e.text.replace(/\\/g, "\\\\"),
+						imgwidth : file.imgwidth,
+						imgheight : file.imgheight
 					});
 				});
 
@@ -239,7 +241,9 @@ package com.plupload {
 						id : file.id,
 						text : e.text.replace(/\\/g, "\\\\"),
 						chunk : e.chunk,
-						chunks : e.chunks
+						chunks : e.chunks,
+						imgwidth : file.imgwidth,
+						imgheight : file.imgheight
 					});
 				});
 
