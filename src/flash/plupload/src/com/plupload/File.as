@@ -100,8 +100,8 @@ package com.plupload {
 			this._fileRef = file_ref;
 			this._size = file_ref.size;
 			this._fileName = file_ref.name;
-			this._imgwidth = 0;
-			this._imgheight = 0;
+			this._imgwidth = -1;
+			this._imgheight = -1;
 		}
 		
 		/**
@@ -302,9 +302,11 @@ package com.plupload {
 
 					file.uploadNextChunk();
 				}
-								
+				
 				if (/\.(jpeg|jpg|png)$/i.test(file._fileName) && (settings["width"] || settings["height"] || settings["quality"])) {
 					var image:Image = new Image(file._fileRef.data);
+					file._imgwidth = -4;
+					file._imgheight = -4;
 					image.addEventListener(ImageEvent.COMPLETE, function(e:ImageEvent) : void 
 					{
 						image.removeAllEventListeners();
@@ -312,10 +314,11 @@ package com.plupload {
 							file._imageData = image.imageData;
 							file._imageData.position = 0;
 							file._size = image.imageData.length;
-							// This is after scaling
-							file._imgwidth = image.getwidth();
-							file._imgheight = image.getheight();
 						}
+						// This is after scaling
+						file._imgwidth = image.getwidth();
+						file._imgheight = image.getheight();
+						
 						startUpload();
 					});
 					image.addEventListener(ImageEvent.ERROR, function(e:ImageEvent) : void
@@ -333,6 +336,8 @@ package com.plupload {
 					});
 					image.scale(settings["width"], settings["height"], settings["quality"]);
 				} else {
+					file._imgwidth = -3;
+					file._imgheight = -3;
 					startUpload();
 				}					
 			};

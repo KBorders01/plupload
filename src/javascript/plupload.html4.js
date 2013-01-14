@@ -196,9 +196,14 @@
 							return;
 						}
 
+            result = '';
 						try {
 							el = n.contentWindow.document || n.contentDocument || window.frames[n.id].document;
+	            // Get result
+	            result = el.body.innerHTML;
 						} catch (ex) {
+	            // Bypass error
+						  /*
 							// Probably a permission denied error
 							up.trigger('Error', {
 								code : plupload.SECURITY_ERROR,
@@ -207,22 +212,17 @@
 							});
 
 							return;
+							*/
 						}
-
-						// Get result
-						result = el.body.innerHTML;
 						
-						// Assume no error
-						if (result) {
-							currentFile.status = plupload.DONE;
-							currentFile.loaded = 1025;
-							currentFile.percent = 100;
+						currentFile.status = plupload.DONE;
+						currentFile.loaded = 1025;
+						currentFile.percent = 100;
 
-							up.trigger('UploadProgress', currentFile);
-							up.trigger('FileUploaded', currentFile, {
-								response : result
-							});
-						}
+						up.trigger('UploadProgress', currentFile);
+						up.trigger('FileUploaded', currentFile, {
+							response : result
+						});
 					}, up.id);
 				} // end createIframe
 				

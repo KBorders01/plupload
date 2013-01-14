@@ -72,6 +72,8 @@ package com.mxi.image
 			scale = Math.min(_width / info.width, _height / info.height);	
 			
 			if (scale > 1 && (!quality || info.type != "JPEG")) {
+				_width = info.width;
+				_height = info.height;
 				dispatchEvent(new ImageEvent(ImageEvent.COMPLETE));
 				return;
 			}
@@ -86,12 +88,12 @@ package com.mxi.image
 		
 		public function getwidth() : Number
 		{
-			return _width;
+			return _width == 0 ? -2 : _width;
 		}
 		
 		public function getheight() : Number
 		{
-			return _height;
+			return _height == 0 ? -2 : _height;
 		}
 		
 		protected function _getImageInfo() : Object
