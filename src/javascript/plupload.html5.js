@@ -60,7 +60,11 @@
 			img = new Image();
 			img.onerror = img.onabort = function() {
 				// Failed to load, the image may be invalid
-				callback({success : false});
+				callback({
+				  success : false,
+          imgwidth : 0,
+          imgheight : 0
+				});
 			};
 			img.onload = function() {
 				var width, height, percentage, jpegHeaders, exifParser;
@@ -84,7 +88,11 @@
 					height = img.height;
 				} else {
 					// Image does not need to be resized
-					callback({success : false});
+					callback({
+					  success : false,
+	          imgwidth : img.width,
+	          imgheight : img.height
+					});
 					return;
 				}
 
@@ -753,10 +761,10 @@
 					scaleImage.call(up, file, up.settings.resize, /\.png$/i.test(file.name) ? 'image/png' : 'image/jpeg', function(res) {
 						// If it was scaled send the scaled image if it failed then
 						// send the raw image and let the server do the scaling
+            file.imgwidth = res.imgwidth;
+            file.imgheight = res.imgheight;
 						if (res.success) {
 							file.size = res.data.length;
-							file.imgwidth = res.imgwidth;
-							file.imgheight = res.imgheight;
 							sendBinaryBlob(res.data);
 						} else if (features.chunks) {
 							sendBinaryBlob(nativeFile); 
