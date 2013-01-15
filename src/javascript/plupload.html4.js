@@ -247,6 +247,8 @@
 					input = getById('input_' + file.id);
 
 					// Set input element name attribute which allows it to be submitted
+					if(input == null)  // HACK: Can happen if HTML4 uploader is loaded by accident
+					  return;
 					input.setAttribute('name', up.settings.file_data_name);
 
 					// Store action
