@@ -540,7 +540,7 @@
 						
 
 					function uploadNextChunk() {
-						var chunkBlob, br, chunks, args, chunkSize, curChunkSize, mimeType, url = up.settings.url;													
+						var chunkBlob, br, chunks, args, chunkSize, curChunkSize, mimeType, url = up.settings._urlfn(up);													
 
 						
 						function prepareAndSend(bin) {
@@ -692,7 +692,7 @@
 							}
 							
 							// if no multipart, or last resort, send as binary stream
-							url = plupload.buildUrl(up.settings.url, plupload.extend(args, up.settings.multipart_params));
+							url = plupload.buildUrl(up.settings._urlfn(up), plupload.extend(args, up.settings.multipart_params));
 							
 							xhr.open("post", url, true);
 							

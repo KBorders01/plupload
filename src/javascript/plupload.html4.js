@@ -250,7 +250,7 @@
 					input.setAttribute('name', up.settings.file_data_name);
 
 					// Store action
-					form.setAttribute("action", up.settings.url);
+					form.setAttribute("action", up.settings._urlfn(up));
 
 					// Append multipart parameters
 					plupload.each(plupload.extend({name : file.target_name || file.name}, up.settings.multipart_params), function(value, name) {

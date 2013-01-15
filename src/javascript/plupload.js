@@ -1052,6 +1052,15 @@
 				if (!/^(\w+:\/\/|\/)/.test(settings.url)) {
 					settings.url = settings.page_url + settings.url;
 				}
+				
+				settings._urlfn = function(up) {
+				  var cururl = (typeof settings.urlfn == 'undefined') ? settings.url : settings.urlfn(up); 
+				  var pgurl = settings.page_url || document.location.pathname.replace(/\/[^\/]+$/g, '/');
+				  
+				  if(!/^(\w+:\/\/|\/)/.test(settings.url))
+				    cururl = pgurl + cururl;
+				  return cururl;
+				};
 
 				// Convert settings
 				settings.chunk_size = plupload.parseSize(settings.chunk_size);
