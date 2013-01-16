@@ -117,7 +117,8 @@
 
 			flashContainer.className = 'plupload flash';
 
-			if (uploader.settings.container) {
+			if (uploader.settings.container)
+			{
 				container = document.getElementById(uploader.settings.container);
 				if (plupload.getStyle(container, 'position') === 'static') {
 					container.style.position = 'relative';
@@ -157,16 +158,17 @@
 				return document.getElementById(uploader.id + '_flash');
 			}
 
+			var waitLoadTimeout = null;
 			function waitLoad() {
 								
 				// Wait for 5 sec
-				if (waitCount++ > 5000) {
+				if (waitCount++ > 100) {
 					callback({success : false});
 					return;
 				}
 
 				if (initialized[uploader.id] === false) { // might also be undefined, if uploader was destroyed by that moment
-					setTimeout(waitLoad, 1);
+				  waitLoadTimeout = setTimeout(waitLoad, 50);
 				}
 			}
 
@@ -191,15 +193,19 @@
 			});
 
 			// Wait for Flash to send init event
-			uploader.bind("Flash:Init", function() {				
+			uploader.bind("Flash:Init", function() {
+        
 				var lookup = {}, i;
 
 				try {
 					getFlashObj().setFileFilters(uploader.settings.filters, uploader.settings.multi_selection);
 				} catch (ex) {
-					callback({success : false});
+				  //if(waitLoadTimeout == null) // Wait for second successful init
+				    callback({success : false});
 					return;
 				}
+        //if(waitLoadTimeout)
+        //  clearTimeout(waitLoadTimeout);
 
 				// Prevent eventual reinitialization of the instance
 				if (initialized[uploader.id]) {
