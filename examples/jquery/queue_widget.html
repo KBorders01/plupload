@@ -5,49 +5,27 @@
 
 <title>Plupload - Queue widget example</title>
 
-<style type="text/css">
-	body {
-		font-family:Verdana, Geneva, sans-serif;
-		font-size:13px;
-		color:#333;
-		background:url(../bg.jpg);
-	}
-</style>
 <link rel="stylesheet" href="../../js/jquery.plupload.queue/css/jquery.plupload.queue.css" type="text/css" media="screen" />
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 
 <!-- production -->
 <script type="text/javascript" src="../../js/plupload.full.min.js"></script>
-
-<!-- debug 
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/mOxie.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/Utils.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/Exceptions.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/I18N.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/EventTarget.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/Runtime.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/Transporter.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/FileAPI.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/Image.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/extra/ImageInfo.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/core/XMLHttpRequest.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/html5.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/html4.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/flash.js"></script>
-<script type="text/javascript" src="../../src/moxie/src/javascript/silverlight.js"></script>
-
-<script type="text/javascript" src="../../src/plupload.js"></script>
--->
-
 <script type="text/javascript" src="../../js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
 
+<!-- debug 
+<script type="text/javascript" src="../../js/moxie.js"></script>
+<script type="text/javascript" src="../../js/plupload.dev.js"></script>
+<script type="text/javascript" src="../../js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+-->
+
+
 </head>
-<body>
+<body style="font: 13px Verdana; background: #eee; color: #333">
 
 <form method="post" action="dump.php">	
 	<div id="uploader">
-		<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+		<p>Your browser doesn't have Flash, Silverlight or HTML5 support.</p>
 	</div>
 	<input type="submit" value="Send" />
 </form>
@@ -60,14 +38,19 @@ $(function() {
 		// General settings
 		runtimes : 'html5,flash,silverlight,html4',
 		url : '../upload.php',
-		max_file_size : '10mb',
-		chunk_size : '1mb',
-		unique_names : true,
+		chunk_size: '1mb',
+		rename : true,
 		dragdrop: true,
-		filters : [
-			{title : "Image files", extensions : "jpg,gif,png"},
-			{title : "Zip files", extensions : "zip"}
-		],
+		
+		filters : {
+			// Maximum file size
+			max_file_size : '10mb',
+			// Specify what files to browse for
+			mime_types: [
+				{title : "Image files", extensions : "jpg,gif,png"},
+				{title : "Zip files", extensions : "zip"}
+			]
+		},
 
 		// Resize images on clientside if we can
 		resize : {width : 320, height : 240, quality : 90},
